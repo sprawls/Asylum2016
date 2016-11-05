@@ -7,6 +7,8 @@ using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour {
 
+    public GameObject CellphonePrefab;
+
     public Vector3 cellphoneCameraPosition;
     public Vector3 cellphoneCameraRotation;
 
@@ -20,6 +22,7 @@ public class CameraController : MonoBehaviour {
 
     //EVENT
     public static event Action<Sprite> OnPictureTaken;
+    public static event Action OnPictureWillBeTaken;
 
     //Cellphone animation
     private bool _cameraModeRequested = false;
@@ -55,6 +58,14 @@ public class CameraController : MonoBehaviour {
         StartCoroutine(DeativateCameraMode());
 
         GameObject tempCellPhone = _mainCamera.transform.FindChild("Cellphone").gameObject;
+        if (CellphonePrefab != null) {
+            GameObject CellGO = (GameObject) Instantiate(CellphonePrefab, transform.position, Quaternion.identity);
+            CellGO.transform.parent = tempCellPhone.transform;
+            CellGO.transform.localPosition = Vector3.zero;
+            CellGO.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            CellGO.transform.localScale = Vector3.one;
+        } 
+        
         SetCellphoneObject(tempCellPhone);
 	}
 	
@@ -141,6 +152,10 @@ public class CameraController : MonoBehaviour {
     }
 
     IEnumerator TakePicture() {
+        if(OnPictureWillBeTaken != null) {
+            OnPictureWillBeTaken();
+        }
+
         _currentlyTakingPicture = true;
 
         _pictureFlash.gameObject.SetActive(true);
@@ -159,6 +174,10 @@ public class CameraController : MonoBehaviour {
         yield return new WaitForSeconds(2f);
 
         _currentlyTakingPicture = false;
+
+        if (OnPictureTaken != null) { 
+            OnPictureTaken(_flashImage.sprite);
+        }
     }
 
     void SaveImage(Image imgToChange) {
@@ -185,9 +204,5 @@ public class CameraController : MonoBehaviour {
 
         Sprite GeneratedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100); ;
         imgToChange.sprite = GeneratedSprite;
-
-        if (OnPictureTaken != null) { 
-            OnPictureTaken(GeneratedSprite);
-        }
     }
 }
