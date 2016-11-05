@@ -11,8 +11,8 @@ public class CameraDistortionVision : MonoBehaviour {
     //private data
     private Material mat;
 
-    //-----------------------------------------
-    // start 
+
+
     void Start() {
         shader = Shader.Find("Image Effects/CameraDistortion");
         mat = new Material(shader);
@@ -20,11 +20,13 @@ public class CameraDistortionVision : MonoBehaviour {
         mat.SetFloat("noiseFactor", noiseFactor);
     }
 
-    //-----------------------------------------
-    // Called by camera to apply image effect
     void OnRenderImage(RenderTexture source, RenderTexture destination) {
         mat.SetFloat("time", Mathf.Sin(Time.time * Time.deltaTime));
         Graphics.Blit(source, destination, mat);
+    }
+
+    void UpdateNoiseFactor(float noise) {
+
     }
 
 }
