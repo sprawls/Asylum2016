@@ -23,6 +23,8 @@ public class CameraController : MonoBehaviour {
     //EVENT
     public static event Action<Sprite> OnPictureTaken;
     public static event Action OnPictureWillBeTaken;
+    public static event Action OnCameraStart;
+    public static event Action OnCameraEnd;
 
     //Cellphone animation
     private bool _cameraModeRequested = false;
@@ -97,8 +99,10 @@ public class CameraController : MonoBehaviour {
     }
 
     IEnumerator DeativateCameraMode() {
+        if (OnCameraEnd != null) {
+            OnCameraEnd();
+        }
         _inEquipCameraAnimation = true;
-        //_cameraDistortionVision.ChangeDistortion(false);
         cameraModeActive = false;
         _cellphoneScreen.SetActive(false);
         _pictureFlash.gameObject.SetActive(false);
@@ -123,8 +127,10 @@ public class CameraController : MonoBehaviour {
     }
 
     IEnumerator ActivateCameraMode() {
+        if (OnCameraStart != null) {
+            OnCameraStart();
+        }
         _inEquipCameraAnimation = true;
-        //_cameraDistortionVision.ChangeDistortion(true);
         cameraModeActive = true;
 
         // DOTWEEN

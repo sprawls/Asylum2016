@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using DG.Tweening;
 
 public class CellphoneMenu : MonoBehaviour {
 	[Header("Apps")]
@@ -23,6 +24,21 @@ public class CellphoneMenu : MonoBehaviour {
 	public static event Action OnQuit;
 	
 	private bool flashlightOpened = false;
+    private CanvasGroup canvasGroup;
+
+    private void Awake() {
+        CameraController.OnCameraStart += FadeOutUI;
+        CameraController.OnCameraEnd += FadeInUI;
+
+        canvasGroup = GetComponentInChildren<CanvasGroup>();
+    }
+
+    private void OnDestroy() {
+        CameraController.OnCameraStart -= FadeOutUI;
+        CameraController.OnCameraEnd -= FadeInUI;
+    }
+
+
 
 	public void OnPhoneIconClicked() {
 		if (OnPhoneOpen != null) {
@@ -81,4 +97,12 @@ public class CellphoneMenu : MonoBehaviour {
 			phoneIcon.sprite = this.phoneRingingIcon;
 		}
 	}
+
+    private void FadeOutUI() {
+        canvasGroup.DOFade(0f, 0.25f);
+    }
+
+    private void FadeInUI() {
+        canvasGroup.DOFade(1f, 0.25f);
+    }
 }
