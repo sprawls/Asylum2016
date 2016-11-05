@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour {
     //Cellphone animation
     private bool _cameraModeRequested = false;
     private bool _inEquipCameraAnimation = false;
+    private bool _currentlyTakingPicture = false;
 
     //Cellphone Object
     private GameObject _cellphoneObject;
@@ -59,7 +60,7 @@ public class CameraController : MonoBehaviour {
             _cameraModeRequested = false;
         }
 
-        if (Input.GetMouseButtonDown(0) && !_inEquipCameraAnimation && cameraModeActive) {
+        if (Input.GetMouseButtonDown(0) && !_inEquipCameraAnimation && cameraModeActive && !_currentlyTakingPicture) {
             StartCoroutine(TakePicture());
         }
 
@@ -133,17 +134,22 @@ public class CameraController : MonoBehaviour {
     }
 
     IEnumerator TakePicture() {
+        _currentlyTakingPicture = true;
+
         _pictureFlash.gameObject.SetActive(true);
         SaveImage(_flashImage);
 
         _flashImage.DOFade(1f, 0.1f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
     
  
         //TODO send event here
         _pictureFlash.gameObject.SetActive(false);
 
-        _flashImage.DOFade(0f, 0.5f);
+        _flashImage.DOFade(0f, 2f);
+        yield return new WaitForSeconds(2f);
+
+        _currentlyTakingPicture = false;
     }
 
     void SaveImage(Image imgToChange) {
@@ -161,6 +167,7 @@ public class CameraController : MonoBehaviour {
         
         Texture2D texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
         texture.ReadPixels( new Rect(0, 0, rt.width, rt.height), 0, 0);
+        texture.Apply();
         RenderTexture.active = null;
         _cellphoneCamera.targetTexture = oldRT;
 
