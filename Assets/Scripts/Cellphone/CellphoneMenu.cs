@@ -6,9 +6,9 @@ using System;
 public class CellphoneMenu : MonoBehaviour {
 	[Header("Apps")]
 	public Button phoneButton;
-	public Button cameraButton;
+	public Button galleryButton;
 	public Button flashlightButton;
-	public Button menuButton;
+	public Button quitButton;
 
 	[Header("Icons")]
 	public Sprite phoneIcon;
@@ -17,10 +17,10 @@ public class CellphoneMenu : MonoBehaviour {
 	public Sprite flashlightClosedIcon;
 
 	public static event Action OnPhoneOpen;
-	public static event Action OnCameraOpen;
+	public static event Action OnGalleryOpen;
 	public static event Action OnFlashlightOpen;
 	public static event Action OnFlashlightClose;
-	public static event Action OnMenuOpen;
+	public static event Action OnQuit;
 	
 	private bool flashlightOpened = false;
 
@@ -37,9 +37,9 @@ public class CellphoneMenu : MonoBehaviour {
 		EventSystem.current.SetSelectedGameObject(null);
 	}
 
-	public void OnCameraIconClicked() {
-		if (OnCameraOpen != null) {
-			OnCameraOpen.Invoke();
+	public void OnGalleryIconClicked() {
+		if (OnGalleryOpen != null) {
+			OnGalleryOpen.Invoke();
 		}
 
 		EventSystem.current.SetSelectedGameObject(null);
@@ -66,9 +66,9 @@ public class CellphoneMenu : MonoBehaviour {
 		EventSystem.current.SetSelectedGameObject(null);
 	}
 
-	public void OnMenuIconClicked() {
-		if (OnMenuOpen != null) {
-			OnMenuOpen.Invoke();
+	public void OnQuitIconClicked() {
+		if (OnQuit != null) {
+			OnQuit.Invoke();
 		}
 
 		EventSystem.current.SetSelectedGameObject(null);
