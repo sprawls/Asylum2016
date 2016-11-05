@@ -30,6 +30,10 @@ public class EventListenerInspector : Editor
     {
         SetValues();
 
+        DrawDefaultInspector();
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Functions Thrown", EditorStyles.boldLabel);
+
         List<EventListener.EventFunction> chosens = _listenerRef.Functions;
         List<int> taggedToBeRemoved = null;
 

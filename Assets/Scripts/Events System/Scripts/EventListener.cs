@@ -39,12 +39,17 @@ public abstract class EventListener : MonoBehaviour
         }
     }
     
+    [SerializeField]
+    private bool _throwOnce = false;
+
+    private bool _alreadyThrown = false;
+
     [HideInInspector]
     public List<EventFunction> Functions = new List<EventFunction>();
 
     //=====================================================================================================
 
-    protected abstract string Description { get; }
+    protected virtual string Description { get { return ""; } }
 
     //=====================================================================================================
     //------------------------------------------------------------------------------------
@@ -63,6 +68,9 @@ public abstract class EventListener : MonoBehaviour
     //------------------------------------------------------------------------------------
     protected void Trigger()
     {
+        if (_throwOnce && _alreadyThrown)
+            return;
+
         for (int i = 0; i < Functions.Count; ++i)
         {
             if (Functions[i] == null)
@@ -70,5 +78,7 @@ public abstract class EventListener : MonoBehaviour
 
             Functions[i].Invoke();
         }
+
+        _alreadyThrown = true;
     }
 }
