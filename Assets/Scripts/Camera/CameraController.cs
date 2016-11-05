@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityStandardAssets.ImageEffects;
@@ -16,6 +17,9 @@ public class CameraController : MonoBehaviour {
     private DepthOfField _depthOfField;
     private CameraDistortionVision _cameraDistortionVision;
     private GameObject _cellphoneScreen;
+
+    //EVENT
+    public static event Action<Sprite> OnPictureTaken;
 
     //Cellphone animation
     private bool _cameraModeRequested = false;
@@ -132,8 +136,8 @@ public class CameraController : MonoBehaviour {
 
     public void SetCellphoneObject(GameObject cellphone) {
         _cellphoneObject = cellphone;
-        _originalPosition = cellphone.transform.position;
-        _originalRotation = cellphone.transform.rotation;
+        _originalPosition = cellphone.transform.localPosition;
+        _originalRotation = cellphone.transform.localRotation;
     }
 
     IEnumerator TakePicture() {
@@ -158,24 +162,32 @@ public class CameraController : MonoBehaviour {
     }
 
     void SaveImage(Image imgToChange) {
+        int pic_width = 1280;
+        int pic_height = 800;
+
         Material imageMat = _cellphoneScreen.GetComponent<MeshRenderer>().material;
         //RenderTexture rt = _cellphoneCamera.targetTexture;
         //Texture2D texture = (imageMat.GetTexture as Texture2D);
 
         RenderTexture oldRT = _cellphoneCamera.targetTexture;
-        RenderTexture rt = new RenderTexture(512, 512, 24);
+        RenderTexture rt = new RenderTexture(pic_width, pic_height, 24);
 
         _cellphoneCamera.targetTexture = rt;
         _cellphoneCamera.Render();
         RenderTexture.active = rt;
 
-        
-        Texture2D texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+
+        Texture2D texture = new Texture2D(pic_width, pic_height, TextureFormat.RGB24, false);
         texture.ReadPixels( new Rect(0, 0, rt.width, rt.height), 0, 0);
         texture.Apply();
         RenderTexture.active = null;
         _cellphoneCamera.targetTexture = oldRT;
 
-        imgToChange.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100);
+        Sprite GeneratedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100); ;
+        imgToChange.sprite = GeneratedSprite;
+
+        if (OnPictureTaken != null) { 
+            OnPictureTaken(GeneratedSprite);
+        }
     }
 }
