@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityStandardAssets.ImageEffects;
@@ -16,6 +17,9 @@ public class CameraController : MonoBehaviour {
     private DepthOfField _depthOfField;
     private CameraDistortionVision _cameraDistortionVision;
     private GameObject _cellphoneScreen;
+
+    //EVENT
+    public static event Action<Sprite> OnPictureTaken;
 
     //Cellphone animation
     private bool _cameraModeRequested = false;
@@ -179,6 +183,9 @@ public class CameraController : MonoBehaviour {
         RenderTexture.active = null;
         _cellphoneCamera.targetTexture = oldRT;
 
-        imgToChange.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100);
+        Sprite GeneratedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100); ;
+        imgToChange.sprite = GeneratedSprite;
+
+        OnPictureTaken(GeneratedSprite);
     }
 }
