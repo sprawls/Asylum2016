@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour {
     //Picture
     private Light _pictureFlash;
     private Image _flashImage;
+    private Image _flashWhiteImage;
 
     //animation values
     private float _cellphoneEquipAnimTime = 0.3f;
@@ -44,6 +45,7 @@ public class CameraController : MonoBehaviour {
         _cellphoneScreen = _mainCamera.transform.FindChild("CameraScreen").gameObject;
         _pictureFlash = _mainCamera.transform.FindChild("PictureFlash").GetComponent<Light>();
         _flashImage = transform.Find("Flash Canvas").GetComponent<Image>();
+        _flashWhiteImage = _flashImage.transform.Find("WhiteImg").GetComponent<Image>();
         _flashImage.transform.parent = null;
 
         StartCoroutine(DeativateCameraMode());
@@ -92,6 +94,7 @@ public class CameraController : MonoBehaviour {
             _cellphoneObject.transform.DOLocalRotateQuaternion(_originalRotation, _cellphoneEquipAnimTime);
         }
         _flashImage.DOFade(0f, 0f);
+        _flashWhiteImage.DOFade(0f, 0f);
         //OTHER ANIM
         float startFocalSize = _depthOfField.focalSize;
         for (float i = 0f; i < 1f; i += Time.deltaTime / _cellphoneEquipAnimTime) {
@@ -140,8 +143,10 @@ public class CameraController : MonoBehaviour {
         SaveImage(_flashImage);
 
         _flashImage.DOFade(1f, 0.1f);
-        yield return new WaitForSeconds(0.2f);
-    
+        _flashWhiteImage.DOFade(0.5f, 0.1f);
+        yield return new WaitForSeconds(0.1f);
+        _flashWhiteImage.DOFade(0f, 0.2f);
+        yield return new WaitForSeconds(0.15f);
  
         //TODO send event here
         _pictureFlash.gameObject.SetActive(false);
