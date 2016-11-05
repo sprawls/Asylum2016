@@ -132,8 +132,8 @@ public class CameraController : MonoBehaviour {
 
     public void SetCellphoneObject(GameObject cellphone) {
         _cellphoneObject = cellphone;
-        _originalPosition = cellphone.transform.position;
-        _originalRotation = cellphone.transform.rotation;
+        _originalPosition = cellphone.transform.localPosition;
+        _originalRotation = cellphone.transform.localRotation;
     }
 
     IEnumerator TakePicture() {
