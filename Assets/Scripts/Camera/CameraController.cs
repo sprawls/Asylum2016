@@ -158,19 +158,22 @@ public class CameraController : MonoBehaviour {
     }
 
     void SaveImage(Image imgToChange) {
+        int pic_width = 1280;
+        int pic_height = 800;
+
         Material imageMat = _cellphoneScreen.GetComponent<MeshRenderer>().material;
         //RenderTexture rt = _cellphoneCamera.targetTexture;
         //Texture2D texture = (imageMat.GetTexture as Texture2D);
 
         RenderTexture oldRT = _cellphoneCamera.targetTexture;
-        RenderTexture rt = new RenderTexture(512, 512, 24);
+        RenderTexture rt = new RenderTexture(pic_width, pic_height, 24);
 
         _cellphoneCamera.targetTexture = rt;
         _cellphoneCamera.Render();
         RenderTexture.active = rt;
 
-        
-        Texture2D texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+
+        Texture2D texture = new Texture2D(pic_width, pic_height, TextureFormat.RGB24, false);
         texture.ReadPixels( new Rect(0, 0, rt.width, rt.height), 0, 0);
         texture.Apply();
         RenderTexture.active = null;
