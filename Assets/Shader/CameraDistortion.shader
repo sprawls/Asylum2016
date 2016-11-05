@@ -44,13 +44,11 @@ float4 frag (v2f_img i) : COLOR
 	float4 c = tex2D(_MainTex, t+float2(dx,dy))*0.5;	
     pix += c;
  
-	//add lens circle effect
-	//(could be optimised by using texture)
-	float dist = distance(i.uv, float2(0.5,0.5));
-	pix *= smoothstep(0.5,0.45,dist);
- 
 	//add rb to the brightest pixels
-	pix.rb = max (pix.r - 0.75, 0)*4;
+	//pix.rb = max (pix.r - 0.75, 0)*4;
+	pix.r = pix.r / 1.1;
+	pix.g = pix.g / 1.1;
+	pix.b = pix.b / 1.1;
  
 	// return pix pixel ;)	
 	return pix;
