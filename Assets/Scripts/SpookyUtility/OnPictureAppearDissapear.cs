@@ -20,6 +20,6 @@ public class OnPictureAppearDissapear : OnPicture {
             else ObjectToAppearOnPhoto.SetActive(false);
         }
 
-
+        Destroy(this);
     }
 }
