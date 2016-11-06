@@ -22,7 +22,8 @@ public class CameraController : MonoBehaviour {
 
     //EVENT
     public static event Action<Sprite> OnPictureTaken;
-    public static event Action OnPictureWillBeTaken;
+    public static event Action OnBeforePictureTaken;
+    public static event Action OnAfterPictureTaken;
     public static event Action OnCameraStart;
     public static event Action OnCameraEnd;
 
@@ -158,14 +159,18 @@ public class CameraController : MonoBehaviour {
     }
 
     IEnumerator TakePicture() {
-        if(OnPictureWillBeTaken != null) {
-            OnPictureWillBeTaken();
+        if (OnBeforePictureTaken != null) {
+            OnBeforePictureTaken();
         }
 
         _currentlyTakingPicture = true;
 
         _pictureFlash.gameObject.SetActive(true);
         SaveImage(_flashImage);
+
+        if (OnPictureTaken != null) {
+            OnPictureTaken(_flashImage.sprite);
+        }
 
         _flashImage.DOFade(1f, 0.1f);
         _flashWhiteImage.DOFade(0.5f, 0.1f);
@@ -181,8 +186,8 @@ public class CameraController : MonoBehaviour {
 
         _currentlyTakingPicture = false;
 
-        if (OnPictureTaken != null) { 
-            OnPictureTaken(_flashImage.sprite);
+        if (OnAfterPictureTaken != null) { 
+            OnAfterPictureTaken();
         }
     }
 

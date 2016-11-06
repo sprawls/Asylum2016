@@ -8,11 +8,11 @@ public class IsRendered : MonoBehaviour {
     void Awake() { _visible = true; }
 
     void OnBecameInvisible() {
-        Debug.Log("Invisible");
+        //Debug.Log("Invisible");
         _visible = false;
     }
     void OnBecameVisible() {
-        Debug.Log("Visible");
+        //Debug.Log("Visible");
         _visible = true;
     }
 }

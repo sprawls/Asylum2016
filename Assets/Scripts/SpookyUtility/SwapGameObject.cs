@@ -9,7 +9,6 @@ public class SwapGameObject : MonoBehaviour {
 
     private IsRendered[] _GOIsRendered;
 
-
     private bool _playerInCollider = false;
 
     void Start() {
