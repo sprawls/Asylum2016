@@ -6,6 +6,8 @@ using System;
 public class CameraSight : MonoBehaviour {
 
     public static event Action<Sprite> OnImportantPictureTaken;
+    public event Action OnImportantPictureTakenNonStatic;
+
     private Camera _cellphoneCamera;
     private Renderer _renderer;
     private bool _isSeen;
@@ -72,6 +74,7 @@ public class CameraSight : MonoBehaviour {
         if(_isSeen)
         {
             OnImportantPictureTaken(picture);
+            OnImportantPictureTakenNonStatic();
         }
     }
 
