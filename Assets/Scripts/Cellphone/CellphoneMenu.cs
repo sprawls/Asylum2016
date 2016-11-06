@@ -21,19 +21,25 @@ public class CellphoneMenu : MonoBehaviour {
 	public static event Action OnMenuClose;
 	public static event Action OnPhoneOpen;
 	public static event Action OnGalleryOpen;
+	public static event Action OnGalleryClose;
 	public static event Action OnFlashlightOpen;
 	public static event Action OnFlashlightClose;
 	public static event Action OnQuit;
 
 	private bool _focused = false;
+	private bool _galleryOpen = false;
 	private bool _flashlightOpened = true;
 	private bool _flashlightWasOpened = false;
+
+	private GameObject _menu; 
 	private CanvasGroup _canvasGroup;
 
 	private void Awake() {
 		CameraController.OnCameraStart += this.OnCameraStart;
 		CameraController.OnCameraEnd += this.OnCameraEnd;
+		CameraController.OnPictureTaken += this.OnPictureTaken;
 
+		_menu = transform.FindChild("Canvas").FindChild("Menu").gameObject;
 		_canvasGroup = GetComponentInChildren<CanvasGroup>();
 	}
 
@@ -55,12 +61,16 @@ public class CellphoneMenu : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown("Cancel") && _focused) {
-			OnUnfocus();
+		if (_focused && Input.GetButtonUp("Cancel")) {
+			if (_galleryOpen && OnGalleryClose != null) {
+				CloseGallery();
+			} else {
+				OnUnfocus();
+			}
 		}
 	}
 
-	public void OnFocus() {
+	private void OnFocus() {
 		EventSystem.current.SetSelectedGameObject(this.phoneButton.gameObject);
 		_focused = true;
 
@@ -69,7 +79,7 @@ public class CellphoneMenu : MonoBehaviour {
 		}
 	}
 
-	public void OnUnfocus() {
+	private void OnUnfocus() {
 		EventSystem.current.SetSelectedGameObject(null);
 		_focused = false;
 
@@ -95,14 +105,22 @@ public class CellphoneMenu : MonoBehaviour {
 
 	public void OnGalleryIconClicked() {
 		if (OnGalleryOpen != null) {
+			_menu.SetActive(false);
+			_galleryOpen = true;
 			OnGalleryOpen.Invoke();
 		}
-
-		// TODO: Open gallery app
-
-		OnUnfocus();
 	}
 
+	private void CloseGallery() {
+		if (OnGalleryClose != null) {
+			_menu.SetActive(true);
+			_galleryOpen = false;
+			OnGalleryClose.Invoke();
+
+			EventSystem.current.SetSelectedGameObject(this.galleryButton.gameObject);
+		}
+	}
+	
 	public void OnFlashlightIconClicked() {
 		_flashlightOpened = !_flashlightOpened;
 
@@ -159,4 +177,8 @@ public class CellphoneMenu : MonoBehaviour {
 		}
 		_flashlightWasOpened = false;
     }
+
+	private void OnPictureTaken(Sprite newPicture) {
+		// TODO: Increment gallery count
+	}
 }
