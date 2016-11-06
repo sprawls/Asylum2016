@@ -14,7 +14,7 @@ public class Gallery : MonoBehaviour {
 	private RectTransform _content;
 
 	protected void Start() {
-		CameraController.OnPictureTaken += this.OnPictureTaken;
+		CameraSight.OnImportantPictureTaken += this.OnPictureTaken;
 		CellphoneMenu.OnGalleryOpen += this.Open;
 		CellphoneMenu.OnGalleryClose += this.Close;
 
