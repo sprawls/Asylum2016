@@ -87,11 +87,13 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
         }
     }
 
+    [EventBoundFunction]
     public void Open()
     {
         _state = DoorState.Opening;
     }
 
+    [EventBoundFunction]
     public void Close()
     {
         _state = DoorState.Closing;
