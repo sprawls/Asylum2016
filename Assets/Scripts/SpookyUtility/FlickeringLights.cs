@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class FlickeringLights : MonoBehaviour {
+public class FlickeringLights : MonoBehaviour, IEventBoundFunctions {
 
     public Light[] _lights;
 
@@ -10,6 +9,8 @@ public class FlickeringLights : MonoBehaviour {
     public Vector2 lenghtOfFlickersRange = new Vector2(0.04f,0.2f);
     public int amountOfFlickersMin = 1;
     public int amountOfFlickersMax = 4;
+
+    private bool _isStopped = false;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,12 @@ public class FlickeringLights : MonoBehaviour {
 
     IEnumerator ManageFlickers() {
         while (true) {
+            if (_isStopped)
+            {
+                yield return null;
+                continue;
+            }
+
             yield return new WaitForSeconds(Random.Range(timeBetweenFlickersRange.x, timeBetweenFlickersRange.y));
             yield return(StartCoroutine(Flicker()));
         }
@@ -38,5 +45,17 @@ public class FlickeringLights : MonoBehaviour {
         foreach (Light l in _lights) {
             l.enabled = active;
         }
+    }
+
+    [EventBoundFunction]
+    public void StartFlicker()
+    {
+        _isStopped = false;
+    }
+
+    [EventBoundFunction]
+    public void PauseFlicker()
+    {
+        _isStopped = true;
     }
 }

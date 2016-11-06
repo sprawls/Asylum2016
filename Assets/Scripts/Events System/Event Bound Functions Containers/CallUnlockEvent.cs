@@ -6,7 +6,7 @@ public class CallUnlockEvent : MonoBehaviour, IEventBoundFunctions
     private CallTrack _trackToUnlock;
 
     [EventBoundFunction]
-    public void SendCallEvent()
+    public void UnlockPhoneCall()
     {
         CallsController.UnlockCallAudioTrack(_trackToUnlock);
     }
