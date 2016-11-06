@@ -10,6 +10,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
     {
+		[SerializeField] private bool m_ListenToMouse;
         [SerializeField] private bool m_JumpEnabled;
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
@@ -46,6 +47,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Use this for initialization
         private void Start()
         {
+			m_ListenToMouse = true;
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -59,10 +61,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
-        // Update is called once per frame
-        private void Update()
-        {
-            RotateView();
+		// Update is called once per frame
+		private void Update() {
+			if (m_ListenToMouse) {
+				RotateView();
+			}
+
+			if (Input.GetKeyDown(KeyCode.M)) { m_ListenToMouse = !m_ListenToMouse; }
+
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {

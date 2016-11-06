@@ -16,23 +16,43 @@ public class GazeController : MonoBehaviour
     public static event Action<Interactable> OnInteractableHoverExit;
 
     private Interactable _currentInteractable = null;
+    private bool _cameraOn = false;
 
     [UsedImplicitly]
     private void Awake()
     {
+        CameraController.OnCameraStart += Callback_OnCameraOn;
+        CameraController.OnCameraEnd += Callback_OnCameraOff;
+    }
+
+    private void Callback_OnCameraOn()
+    {
+        _cameraOn = true;
+    }
+
+    private void Callback_OnCameraOff()
+    {
+        _cameraOn = false;
     }
 
     [UsedImplicitly]
     private void Update()
     {
-        Interactable interactable = GetGazeSelection();
+        Interactable interactable = _cameraOn ? null : GetGazeSelection();
 
         if (_currentInteractable != interactable)
         {
             Debug.LogFormat("Changed interactable from {0} to {1}", _currentInteractable, interactable);
             if (OnInteractableHoverExit != null) OnInteractableHoverExit(_currentInteractable);
+            if (_currentInteractable != null) _currentInteractable.ClearTargeted();
             _currentInteractable = interactable;
+            if (_currentInteractable != null) _currentInteractable.SetTargeted();
             if (OnInteractableHoverEnter != null) OnInteractableHoverEnter(_currentInteractable);
+        }
+
+        if (!_cameraOn && _currentInteractable != null && Input.GetButtonDown("Interact"))
+        {
+            _currentInteractable.Trigger();
         }
     }
 

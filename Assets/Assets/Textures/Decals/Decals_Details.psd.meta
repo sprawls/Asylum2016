@@ -1,0 +1,143 @@
+fileFormatVersion: 2
+guid: 71f63cf62771e14459fea0cc4d01b32f
+timeCreated: 1478384538
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Decals_BoxHole
+    21300002: Decals_BoxRegularText
+    21300004: Decals_BoxHand
+    21300006: Decals_BoxYou
+    21300008: Decals_BoxDid
+    21300010: Decals_BoxIt
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Decals_BoxHole
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 7568
+        width: 651
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 45}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_BoxRegularText
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 7524
+        width: 709
+        height: 402
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_BoxHand
+      rect:
+        serializedVersion: 2
+        x: 1551
+        y: 7474
+        width: 715
+        height: 470
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_BoxYou
+      rect:
+        serializedVersion: 2
+        x: 2290
+        y: 7474
+        width: 700
+        height: 476
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_BoxDid
+      rect:
+        serializedVersion: 2
+        x: 3013
+        y: 7476
+        width: 705
+        height: 475
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_BoxIt
+      rect:
+        serializedVersion: 2
+        x: 3753
+        y: 7425
+        width: 705
+        height: 531
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
