@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
@@ -48,6 +47,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Use this for initialization
         private void Start()
         {
+			CellphoneMenu.OnMenuOpen += this.OnMenuOpen;
+			CellphoneMenu.OnMenuClose += this.OnMenuClose;
+
 			m_ListenToMouse = true;
 			m_MenuOpened = false;
             m_CharacterController = GetComponent<CharacterController>();
@@ -65,22 +67,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 		// Update is called once per frame
 		private void Update() {
-			if (m_ListenToMouse) {
-				RotateView();
-			}
-
 			// Debug key for stopping mouse movement
 			if (Input.GetKeyDown(KeyCode.M)) { m_ListenToMouse = !m_ListenToMouse; }
 
-			// Deactivate character controller while using the cellphone menu
-			if (Input.GetButtonDown("Cellphone")) {
-				m_MenuOpened = !m_MenuOpened;
-				m_CharacterController.enabled = !m_MenuOpened;
-			}
-            
-			if (Input.GetButtonDown("Cancel")) {
-				m_MenuOpened = false;
-				m_CharacterController.enabled = !m_MenuOpened;
+			if (m_ListenToMouse) {
+				RotateView();
 			}
 
             // the jump state needs to read here to make sure it is not missed
@@ -104,6 +95,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+		private void OnMenuOpen()
+		{
+			m_MenuOpened = true;
+			m_CharacterController.enabled = false;
+		}
+
+		private void OnMenuClose()
+		{
+			m_MenuOpened = false;
+			m_CharacterController.enabled = true;
+		}
 
         private void PlayLandingSound()
         {
