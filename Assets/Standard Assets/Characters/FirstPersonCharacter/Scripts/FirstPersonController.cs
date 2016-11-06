@@ -11,6 +11,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     public class FirstPersonController : MonoBehaviour
     {
 		[SerializeField] private bool m_ListenToMouse;
+		[SerializeField] private bool m_MenuOpened;
         [SerializeField] private bool m_JumpEnabled;
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
@@ -48,6 +49,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Start()
         {
 			m_ListenToMouse = true;
+			m_MenuOpened = false;
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -67,7 +69,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				RotateView();
 			}
 
+			// Debug key for stopping mouse movement
 			if (Input.GetKeyDown(KeyCode.M)) { m_ListenToMouse = !m_ListenToMouse; }
+
+			// Deactivate character controller while using the cellphone menu
+			if (Input.GetButtonDown("Cellphone")) {
+				m_MenuOpened = !m_MenuOpened;
+				m_CharacterController.enabled = !m_MenuOpened;
+			}
+
+			if (Input.GetButtonDown("Cancel")) {
+				m_MenuOpened = false;
+				m_CharacterController.enabled = !m_MenuOpened;
+			}
 
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -101,43 +115,45 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            float speed;
-            GetInput(out speed);
-            // always move along the camera forward as it is the direction that it being aimed at
-            Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
+			if (!m_MenuOpened) {
+				float speed;
+				GetInput(out speed);
+				// always move along the camera forward as it is the direction that it being aimed at
+				Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
 
-            // get a normal for the surface that is being touched to move along it
-            RaycastHit hitInfo;
-            Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                               m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
-            desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
+				// get a normal for the surface that is being touched to move along it
+				RaycastHit hitInfo;
+				Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
+								   m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+				desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
-            m_MoveDir.x = desiredMove.x*speed;
-            m_MoveDir.z = desiredMove.z*speed;
+				m_MoveDir.x = desiredMove.x*speed;
+				m_MoveDir.z = desiredMove.z*speed;
 
 
-            if (m_CharacterController.isGrounded)
-            {
-                m_MoveDir.y = -m_StickToGroundForce;
+				if (m_CharacterController.isGrounded)
+				{
+					m_MoveDir.y = -m_StickToGroundForce;
 
-                if (m_JumpEnabled && m_Jump)
-                {
-                    m_MoveDir.y = m_JumpSpeed;
-                    PlayJumpSound();
-                    m_Jump = false;
-                    m_Jumping = true;
-                }
-            }
-            else
-            {
-                m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
-            }
-            m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
+					if (m_JumpEnabled && m_Jump)
+					{
+						m_MoveDir.y = m_JumpSpeed;
+						PlayJumpSound();
+						m_Jump = false;
+						m_Jumping = true;
+					}
+				}
+				else
+				{
+					m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
+				}
+				m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
 
-            ProgressStepCycle(speed);
-            UpdateCameraPosition(speed);
+				ProgressStepCycle(speed);
+				UpdateCameraPosition(speed);
 
-            m_MouseLook.UpdateCursorLock();
+				m_MouseLook.UpdateCursorLock();
+			}
         }
 
 

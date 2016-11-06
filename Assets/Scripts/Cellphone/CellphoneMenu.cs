@@ -17,31 +17,64 @@ public class CellphoneMenu : MonoBehaviour {
 	public Sprite flashlightOpenedIcon;
 	public Sprite flashlightClosedIcon;
 
+	public static event Action OnMenuOpen;
+	public static event Action OnMenuClose;
 	public static event Action OnPhoneOpen;
 	public static event Action OnGalleryOpen;
 	public static event Action OnFlashlightOpen;
 	public static event Action OnFlashlightClose;
 	public static event Action OnQuit;
-	
-	private bool flashlightOpened = true;
-	private bool flashlightWasOpened = false;
-    private CanvasGroup canvasGroup;
 
-    private void Awake() {
-        CameraController.OnCameraStart += this.OnCameraStart;
-        CameraController.OnCameraEnd += this.OnCameraEnd;
+	private bool _focused = false;
+	private bool _flashlightOpened = true;
+	private bool _flashlightWasOpened = false;
+	private CanvasGroup _canvasGroup;
 
-        this.canvasGroup = GetComponentInChildren<CanvasGroup>();
-    }
+	private void Awake() {
+		CameraController.OnCameraStart += this.OnCameraStart;
+		CameraController.OnCameraEnd += this.OnCameraEnd;
 
-    private void OnDestroy() {
-        CameraController.OnCameraStart -= this.OnCameraStart;
-        CameraController.OnCameraEnd -= this.OnCameraEnd;
-    }
+		_canvasGroup = GetComponentInChildren<CanvasGroup>();
+	}
+
+	private void OnDestroy() {
+		CameraController.OnCameraStart -= this.OnCameraStart;
+		CameraController.OnCameraEnd -= this.OnCameraEnd;
+	}
 
 	private void Update() {
 		if (Input.GetButtonDown("Flashlight")) {
 			OnFlashlightIconClicked();
+		}
+
+		if (Input.GetButtonDown("Cellphone")) {
+			if (!_focused) {
+				OnFocus();
+			} else {
+				OnUnfocus();
+			}
+		}
+
+		if (Input.GetButtonDown("Cancel") && _focused) {
+			OnUnfocus();
+		}
+	}
+
+	public void OnFocus() {
+		EventSystem.current.SetSelectedGameObject(this.phoneButton.gameObject);
+		_focused = true;
+
+		if (OnMenuOpen != null) {
+			OnMenuOpen.Invoke();
+		}
+	}
+
+	public void OnUnfocus() {
+		EventSystem.current.SetSelectedGameObject(null);
+		_focused = false;
+
+		if (OnMenuClose != null) {
+			OnMenuClose.Invoke();
 		}
 	}
 
@@ -55,7 +88,9 @@ public class CellphoneMenu : MonoBehaviour {
 			}
 		}
 
-		EventSystem.current.SetSelectedGameObject(null);
+		// TODO: Play calls
+
+		OnUnfocus();
 	}
 
 	public void OnGalleryIconClicked() {
@@ -63,18 +98,20 @@ public class CellphoneMenu : MonoBehaviour {
 			OnGalleryOpen.Invoke();
 		}
 
-		EventSystem.current.SetSelectedGameObject(null);
+		// TODO: Open gallery app
+
+		OnUnfocus();
 	}
 
 	public void OnFlashlightIconClicked() {
-		this.flashlightOpened = !this.flashlightOpened;
+		_flashlightOpened = !_flashlightOpened;
 
 		Image flashlightIcon = flashlightButton.transform.FindChild("Icon").GetComponent<Image>();
 		if (flashlightIcon != null) {
-			flashlightIcon.sprite = (this.flashlightOpened) ? this.flashlightOpenedIcon : this.flashlightClosedIcon;
+			flashlightIcon.sprite = (_flashlightOpened) ? this.flashlightOpenedIcon : this.flashlightClosedIcon;
 		}
 
-		if (this.flashlightOpened) {
+		if (_flashlightOpened) {
 			if (OnFlashlightOpen != null) {
 				OnFlashlightOpen.Invoke();
 			}
@@ -83,8 +120,6 @@ public class CellphoneMenu : MonoBehaviour {
 				OnFlashlightClose.Invoke();
 			}
 		}
-
-		EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	public void OnQuitIconClicked() {
@@ -92,7 +127,9 @@ public class CellphoneMenu : MonoBehaviour {
 			OnQuit.Invoke();
 		}
 
-		EventSystem.current.SetSelectedGameObject(null);
+		// TODO: Quit gaem
+
+		OnUnfocus();
 	}
 
 	// TODO: Plug this to the receive call event
@@ -104,22 +141,22 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 
     private void OnCameraStart() {
-        this.canvasGroup.DOFade(0f, 0.25f);
+        _canvasGroup.DOFade(0f, 0.25f);
 
 		// Close flashlight when opening camera
-		this.flashlightWasOpened = this.flashlightOpened;
-		if (this.flashlightOpened) {
+		_flashlightWasOpened = _flashlightOpened;
+		if (_flashlightOpened) {
 			OnFlashlightIconClicked();
 		}
     }
 
     private void OnCameraEnd() {
-        this.canvasGroup.DOFade(1f, 0.25f);
+        _canvasGroup.DOFade(1f, 0.25f);
 
 		// Reopen flashlight if it was opened
-		if (this.flashlightWasOpened) {
+		if (_flashlightWasOpened) {
 			OnFlashlightIconClicked();
 		}
-		this.flashlightWasOpened = false;
+		_flashlightWasOpened = false;
     }
 }
