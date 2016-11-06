@@ -73,10 +73,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			if (Input.GetKeyDown(KeyCode.M)) { m_ListenToMouse = !m_ListenToMouse; }
 
 			// Deactivate character controller while using the cellphone menu
-			if (Input.GetButtonDown("Cellphone")) {
+			/*if (Input.GetButtonDown("Cellphone")) {
 				m_MenuOpened = !m_MenuOpened;
 				m_CharacterController.enabled = !m_MenuOpened;
 			}
+            */
 
 			if (Input.GetButtonDown("Cancel")) {
 				m_MenuOpened = false;

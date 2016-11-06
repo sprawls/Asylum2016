@@ -46,14 +46,14 @@ public class CellphoneMenu : MonoBehaviour {
 		if (Input.GetButtonDown("Flashlight")) {
 			OnFlashlightIconClicked();
 		}
-
+        /*
 		if (Input.GetButtonDown("Cellphone")) {
 			if (!_focused) {
 				OnFocus();
 			} else {
 				OnUnfocus();
 			}
-		}
+		}*/
 
 		if (Input.GetButtonDown("Cancel") && _focused) {
 			OnUnfocus();
