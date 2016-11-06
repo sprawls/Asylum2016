@@ -1,6 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+
+
+public enum ESFXType
+{
+    ESFXType_GAMEPLAY,
+    ESFXType_PLAYER
+};
+
+
 public class SoundManager : MonoBehaviour {
 
     [Tooltip("RandomSounds")]
@@ -17,7 +26,11 @@ public class SoundManager : MonoBehaviour {
     private AudioSource _ambientAudioSource;
     [SerializeField]
     private AudioSource _gameplaySFXAudioSource;
+    [SerializeField]
+    private AudioSource _playerSFXAudioSource;
 
+
+    [Header("Random Range for Pitch when playing random sfx.")]
     [Range(.5f,1.0f)]
     [SerializeField]
     private float minPitchSFXRange = 0.90f;
@@ -41,16 +54,31 @@ public class SoundManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlaySingleSFX(AudioClip clip)
+    public void PlaySingleSFX(AudioClip clip, ESFXType type)
     {
         //Resets the pitch
-        _gameplaySFXAudioSource.pitch = 1.0f;
+        AudioSource source = null;
+        switch (type)
+        {
+            case ESFXType.ESFXType_PLAYER:
+                source = _playerSFXAudioSource;
+                break;
 
-        _gameplaySFXAudioSource.clip = clip;
-        _gameplaySFXAudioSource.Play();
+            case ESFXType.ESFXType_GAMEPLAY:
+                source = _gameplaySFXAudioSource;
+                break;
+        }
+
+        if(source)
+        {
+            source.pitch = 1.0f;
+            source.clip = clip;
+            source.Play();
+        }
+        
     }
 
-    public void PlayRandomSFX (params AudioClip[] clips)
+    public void PlayRandomGameplaySFX (params AudioClip[] clips)
     {
         int randomIndex = Random.Range(0, clips.Length);
         float randomPitch = Random.Range(minPitchSFXRange, maxPitchSFXRange);
@@ -94,7 +122,7 @@ public class SoundManager : MonoBehaviour {
 
     public void PlayRandomSFXFromRandomSounds()
     {
-        PlayRandomSFX(randomSounds);
+        PlayRandomGameplaySFX(randomSounds);
     }
     
 }
