@@ -37,12 +37,14 @@ public class CameraSight : MonoBehaviour {
 
     void OnWillRenderObject()
     {
-        if(Vector3.Distance(_cellphoneCamera.transform.position, _renderer.transform.position) > _maximumDistanceFromSightOnImportantPicture)
+        Vector3 camToRenderer = _renderer.transform.position - _cellphoneCamera.transform.position;
+        float distance = camToRenderer.magnitude;
+        if (distance > _maximumDistanceFromSightOnImportantPicture)
         {
             _isSeen = false;
             return;
         }
-        else if(Vector3.Angle(_cellphoneCamera.transform.forward, _renderer.transform.position - _cellphoneCamera.transform.position)  > _maximumLookAtAngle)
+        else if(Vector3.Angle(_cellphoneCamera.transform.forward, camToRenderer)  > _maximumLookAtAngle)
         {
             _isSeen = false;
             return;
@@ -54,7 +56,9 @@ public class CameraSight : MonoBehaviour {
         }
         else
         {
-            _isSeen = true;
+            Ray ray = new Ray(_cellphoneCamera.transform.position, camToRenderer);
+            _isSeen = !Physics.Raycast(ray, distance, Physics.DefaultRaycastLayers , QueryTriggerInteraction.Ignore);
+            Debug.DrawRay(ray.origin, ray.direction, Color.red);
         }
     }
 
