@@ -27,6 +27,7 @@ public class CellphoneMenu : MonoBehaviour {
 	public static event Action OnQuit;
 
 	private bool _focused = false;
+	private bool _listen = true;
 	private bool _galleryOpen = false;
 	private bool _flashlightOpened = true;
 	private bool _flashlightWasOpened = false;
@@ -49,23 +50,30 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (Input.GetButtonDown("Flashlight")) {
-			OnFlashlightIconClicked();
-		}
-        
-		if (Input.GetButtonDown("Cellphone")) {
-			if (!_focused) {
-				OnFocus();
-			} else {
-				OnUnfocus();
-			}
+		// Debug key to stop keyboard events
+		if (Input.GetKeyDown(KeyCode.M)) {
+			_listen = !_listen;
 		}
 
-		if (_focused && Input.GetButtonUp("Cancel")) {
-			if (_galleryOpen && OnGalleryClose != null) {
-				CloseGallery();
-			} else {
-				OnUnfocus();
+		if (_listen) {
+			if (Input.GetButtonDown("Flashlight")) {
+				OnFlashlightIconClicked();
+			}
+        
+			if (Input.GetButtonDown("Cellphone")) {
+				if (!_focused) {
+					OnFocus();
+				} else {
+					OnUnfocus();
+				}
+			}
+
+			if (_focused && Input.GetButtonUp("Cancel")) {
+				if (_galleryOpen && OnGalleryClose != null) {
+					CloseGallery();
+				} else {
+					OnUnfocus();
+				}
 			}
 		}
 	}
