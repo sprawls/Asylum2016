@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class Gallery : MonoBehaviour {
-
 	[SerializeField]
 	private List<Sprite> _pictures;
 
@@ -27,7 +25,9 @@ public class Gallery : MonoBehaviour {
 
 	protected void Update() {
 		if (_gallery.activeSelf) {
-			_scrollRect.verticalNormalizedPosition += Input.mouseScrollDelta.y;
+			float verticalPos = _scrollRect.verticalNormalizedPosition;
+			verticalPos += _scrollRect.scrollSensitivity * Input.mouseScrollDelta.y;
+			_scrollRect.verticalNormalizedPosition = Mathf.Clamp(verticalPos, 0f, 1f);
 		}
 	}
 
@@ -47,9 +47,5 @@ public class Gallery : MonoBehaviour {
 
 	private void Close() {
 		_gallery.SetActive(false);
-	}
-
-	public void Test() {
-		Debug.Log("Dick");
 	}
 }
