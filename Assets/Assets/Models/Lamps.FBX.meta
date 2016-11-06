@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: 317027b1707aa9945bef77f918747c35
-timeCreated: 1478303258
+guid: 95a6b528a7222874d96cca80fec2d883
+timeCreated: 1478399021
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: porte_low_01
-    9500000: //RootNode
+    100000: Ceiling_Lights
+    100002: //RootNode
+    100004: Small_Lamp
+    400000: Ceiling_Lights
+    400002: //RootNode
+    400004: Small_Lamp
+    2300000: Ceiling_Lights
+    2300002: Small_Lamp
+    3300000: Ceiling_Lights
+    3300002: Small_Lamp
+    4300000: Ceiling_Lights
+    4300002: Small_Lamp
   materials:
     importMaterials: 1
     materialName: 0
@@ -35,7 +41,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 2
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -69,7 +75,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
