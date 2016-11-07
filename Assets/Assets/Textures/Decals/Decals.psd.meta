@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 38ad52424e5bd1e4eb748ef7548279ff
-timeCreated: 1478372882
+timeCreated: 1478480578
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -66,9 +66,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 6310
-        width: 2101
-        height: 1662
+        y: 7043
+        width: 1260
+        height: 929
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 94, y: 0, z: 0, w: 0}
@@ -78,10 +78,10 @@ TextureImporter:
       name: Decals_Murderer
       rect:
         serializedVersion: 2
-        x: 2329
-        y: 6247
-        width: 2587
-        height: 1678
+        x: 1414
+        y: 6935
+        width: 1428
+        height: 899
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -91,10 +91,10 @@ TextureImporter:
       name: Decal_Pig
       rect:
         serializedVersion: 2
-        x: 5997
-        y: 6482
-        width: 1944
-        height: 1458
+        x: 3370
+        y: 7134
+        width: 1148
+        height: 788
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,10 +104,10 @@ TextureImporter:
       name: Decals_Monster
       rect:
         serializedVersion: 2
-        x: 5746
-        y: 5009
-        width: 2164
-        height: 1458
+        x: 3245
+        y: 6273
+        width: 1283
+        height: 855
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,10 +117,10 @@ TextureImporter:
       name: Decal_Kill
       rect:
         serializedVersion: 2
-        x: 5637
-        y: 3707
-        width: 1348
-        height: 1192
+        x: 3209
+        y: 5576
+        width: 766
+        height: 619
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,10 +130,10 @@ TextureImporter:
       name: Decals_er
       rect:
         serializedVersion: 2
-        x: 7063
-        y: 3754
-        width: 737
-        height: 1161
+        x: 4055
+        y: 5594
+        width: 391
+        height: 472
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,10 +143,10 @@ TextureImporter:
       name: Decals_Pig2
       rect:
         serializedVersion: 2
-        x: 5841
-        y: 2077
-        width: 1896
-        height: 1583
+        x: 3340
+        y: 4661
+        width: 1106
+        height: 883
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,10 +156,10 @@ TextureImporter:
       name: Decals_911
       rect:
         serializedVersion: 2
-        x: 5809
-        y: 635
-        width: 1928
-        height: 1473
+        x: 3317
+        y: 3773
+        width: 1129
+        height: 863
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +169,10 @@ TextureImporter:
       name: Decal_Face2
       rect:
         serializedVersion: 2
-        x: 244
-        y: 839
-        width: 1599
-        height: 2273
+        x: 171
+        y: 3875
+        width: 996
+        height: 1313
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

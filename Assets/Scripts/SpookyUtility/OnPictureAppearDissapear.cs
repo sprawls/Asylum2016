@@ -19,7 +19,6 @@ public class OnPictureAppearDissapear : OnPicture {
             if (DestroyObjectToAppearOnPhotoAfter) Destroy(ObjectToAppearOnPhoto);
             else ObjectToAppearOnPhoto.SetActive(false);
         }
-
-
+        Unsubscribe();
     }
 }
