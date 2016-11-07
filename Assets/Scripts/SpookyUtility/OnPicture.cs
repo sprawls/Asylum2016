@@ -6,9 +6,13 @@ public class OnPicture : MonoBehaviour {
     public GameObject ObjectToBeVisible;
     public float maxRangeForPicture = 15f;
     public float maxAngleForPicture = 30f;
+    public float maxAngleFacingForPicture = 30f;
 
     private IsRendered[] _IsRendered;
     private static GameObject _player;
+    private bool _activated = false;
+    private bool _pictureValid = false;
+    private bool _unsuscribed = false;
 
 	void Awake () {
         CameraController.OnBeforePictureTaken += OnBeforePictureTakenEvent;
@@ -20,36 +24,37 @@ public class OnPicture : MonoBehaviour {
 	}
 
 	void Destroy () {
-        CameraController.OnBeforePictureTaken -= OnBeforePictureTakenEvent;
-        CameraController.OnPictureTaken -= OnPictureTakenEvent;
-        CameraController.OnAfterPictureTaken -= OnAfterPictureTakenEvent;
+        Unsubscribe();
 	}
 
     void OnPictureTakenEvent(Sprite sprite) {
-        if (IsPictureValid()) {
+        if (!_activated && _pictureValid) {
             OnPictureTaken();
         }
     }
 
     void OnBeforePictureTakenEvent() {
-        if (IsPictureValid()) {
+        IsPictureValid();
+        if (!_activated && _pictureValid) {
             OnBeforePictureTaken();
         }
     }
 
     void OnAfterPictureTakenEvent() {
-        if (IsPictureValid()) {
+        if (!_activated && _pictureValid) {
             OnAfterPictureTaken();
+            _activated = true;
         }
     }
 
-    bool IsPictureValid() {
-        if (IsRendered() && !IsObstructed() && IsInRange()) return true;
-        else return false;
+    void IsPictureValid() {
+        if (IsRendered() && !IsObstructed() && IsInRange()) _pictureValid = true;
+        else _pictureValid = false;
     }
 
     bool IsRendered() {
         foreach (IsRendered isRend in _IsRendered) {
+            //Debug.Log(gameObject.name + "  " + isRend._visible);
             if (isRend._visible) return true;
         }
         return false;
@@ -63,7 +68,7 @@ public class OnPicture : MonoBehaviour {
 
             if (Vector3.Angle(_player.transform.forward, camToRenderer) > maxAngleForPicture) {           
                 return true;
-            } else if (Vector3.Angle(isRend.transform.forward, _player.transform.position - isRend.transform.position) > maxAngleForPicture) {
+            } else if (Vector3.Angle(isRend.transform.forward, _player.transform.position - isRend.transform.position) > maxAngleFacingForPicture) {
                 return true;
             }
         }
@@ -90,5 +95,14 @@ public class OnPicture : MonoBehaviour {
 
     protected void UpdateIsRenderedObjects() {
         _IsRendered = ObjectToBeVisible.GetComponentsInChildren<IsRendered>();
+    }
+
+    protected void Unsubscribe() {
+        if (!_unsuscribed) { 
+            CameraController.OnBeforePictureTaken -= OnBeforePictureTakenEvent;
+            CameraController.OnPictureTaken -= OnPictureTakenEvent;
+            CameraController.OnAfterPictureTaken -= OnAfterPictureTakenEvent;
+            _unsuscribed = true;
+        }
     }
 }
