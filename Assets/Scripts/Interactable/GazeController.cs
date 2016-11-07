@@ -1,4 +1,4 @@
-﻿#define DEBUG_RAYCAST
+﻿//#define DEBUG_RAYCAST
 
 using System;
 using UnityEngine;
@@ -42,7 +42,6 @@ public class GazeController : MonoBehaviour
 
         if (_currentInteractable != interactable)
         {
-            Debug.LogFormat("Changed interactable from {0} to {1}", _currentInteractable, interactable);
             if (OnInteractableHoverExit != null) OnInteractableHoverExit(_currentInteractable);
             if (_currentInteractable != null) _currentInteractable.ClearTargeted();
             _currentInteractable = interactable;
@@ -68,6 +67,14 @@ public class GazeController : MonoBehaviour
         if (hit.collider == null)
             return null;
 
-        return hit.collider.gameObject.GetComponent<Interactable>();
+        Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
+
+        if (i == null)
+            return null;
+
+        if (i.IsInteractable)
+            return i;
+
+        return null;
     }
 }

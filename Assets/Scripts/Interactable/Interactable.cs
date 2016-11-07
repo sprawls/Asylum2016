@@ -1,21 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Deployment.Internal;
+using UnityEngine;
 using JetBrains.Annotations;
 
-[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(Collider))]
 public abstract class Interactable : MonoBehaviour
 {
-    public Renderer RendererObject { get; private set; }
     private float _outlineValue;
     private bool _highlightActive = false;
+    private OutlineController[] _outlineControllers;
+
+    public virtual bool IsInteractable { get { return true; } }
 
     protected abstract void OnTrigger();
 
     [UsedImplicitly]
-    protected virtual void Awake()
+    private void Start()
     {
-        RendererObject = GetComponent<Renderer>();
-
-        _outlineValue = RendererObject.material.GetFloat("_Outline");
+        _outlineControllers = GetComponentsInChildren<OutlineController>();
+        
         ClearTargeted();
     }
 
@@ -24,20 +26,30 @@ public abstract class Interactable : MonoBehaviour
         OnTrigger();
     }
 
-    private void SetState(bool targeted)
-    {
-        RendererObject.material.SetFloat("_Outline", targeted ? _outlineValue : 0f);
-    }
-
     public void SetTargeted()
     {
         _highlightActive = true;
-        SetState(true);
+        SetOutline(true);
     }
 
     public void ClearTargeted()
     {
         _highlightActive = false;
-        RendererObject.material.SetFloat("_Outline", 0f);
+        SetOutline(false);
+    }
+
+    private void SetOutline(bool show)
+    {
+        for (int i = 0; i < _outlineControllers.Length; ++i)
+        {
+            if (show)
+            {
+                _outlineControllers[i].Show();
+            }
+            else
+            {
+                _outlineControllers[i].Hide();
+            }
+        }
     }
 }

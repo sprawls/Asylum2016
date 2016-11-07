@@ -16,6 +16,9 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     private bool _startsOpen;
 
     [SerializeField]
+    private bool _locked = false;
+
+    [SerializeField]
     private AnimationCurve _curve;
 
     [SerializeField]
@@ -25,22 +28,25 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     private float _animCurrentTime;
     private float _animTime;
 
-    [UsedImplicitly]
-    protected override void Awake()
+    public override bool IsInteractable
     {
-        base.Awake();
+        get { return !_locked; }
+    }
 
+    [UsedImplicitly]
+    private void Awake()
+    {
         _animTime = _curve.keys[_curve.length - 1].time;
 
         if (_startsOpen)
         {
             _state = DoorState.Opened;
-            _animCurrentTime = 0;
+            _animCurrentTime = _animTime;
         }
         else
         {
             _state = DoorState.Closed;
-            _animCurrentTime = _animTime;
+            _animCurrentTime = 0;
         }
 
         _pivot.transform.rotation = Quaternion.Euler(new Vector3(0, _curve.Evaluate(_animCurrentTime), 0));
@@ -73,6 +79,9 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
 
     protected override void OnTrigger()
     {
+        if (_locked)
+            return;
+
         switch (_state)
         {
             case DoorState.Closed:
@@ -90,12 +99,30 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     [EventBoundFunction]
     public void Open()
     {
+        if (_locked)
+            return;
+
         _state = DoorState.Opening;
     }
 
     [EventBoundFunction]
     public void Close()
     {
+        if (_locked)
+            return;
+
         _state = DoorState.Closing;
+    }
+
+    [EventBoundFunction]
+    public void Lock()
+    {
+        _locked = true;
+    }
+
+    [EventBoundFunction]
+    public void Unlock()
+    {
+        _locked = false;
     }
 }
