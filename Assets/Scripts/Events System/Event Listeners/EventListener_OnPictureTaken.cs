@@ -1,13 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using JetBrains.Annotations;
 
-[RequireComponent(typeof(CameraSight))]
 public class EventListener_OnPictureTaken : EventListener
 {
     protected override void Awake()
     {
         base.Awake();
+        
+        CameraSight camSight = GetComponentInChildren<CameraSight>();
 
-        GetComponent<CameraSight>().OnImportantPictureTakenNonStatic += () => { Trigger(); };
+        if (camSight == null)
+        {
+            Debug.Log("No Camera sight children of object " + gameObject.name);
+            return;
+        }
+
+        camSight.OnImportantPictureTakenNonStatic += () => { Trigger(); };
     }
 }
