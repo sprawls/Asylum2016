@@ -12,6 +12,7 @@ public enum ESFXType
 
 public class SoundManager : MonoBehaviour {
 
+    [Header("AudioClips")]
     [Tooltip("RandomSounds")]
     [SerializeField]
     private AudioClip[] randomSounds;
@@ -20,6 +21,7 @@ public class SoundManager : MonoBehaviour {
     private static SoundManager _instance;
     public static SoundManager  Instance { get { return _instance; } }
 
+    [Header("AudioSources")]
     [SerializeField]
     private AudioSource _musicAudioSource;
     [SerializeField]
