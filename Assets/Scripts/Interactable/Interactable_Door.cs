@@ -49,7 +49,7 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
             _animCurrentTime = 0;
         }
 
-        _pivot.transform.rotation = Quaternion.Euler(new Vector3(0, _curve.Evaluate(_animCurrentTime), 0));
+        _pivot.transform.localRotation = Quaternion.Euler(new Vector3(0, _curve.Evaluate(_animCurrentTime), 0));
     }
 
     [UsedImplicitly]
@@ -74,7 +74,7 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
                 break;
         }
 
-        _pivot.transform.rotation = Quaternion.Euler(new Vector3(0, _curve.Evaluate(_animCurrentTime), 0));
+        _pivot.transform.localRotation = Quaternion.Euler(new Vector3(0, _curve.Evaluate(_animCurrentTime), 0));
     }
 
     protected override void OnTrigger()
