@@ -48,6 +48,9 @@ public class OnPicture : MonoBehaviour {
     }
 
     void IsPictureValid() {
+        if (ObjectToBeVisible == null) _pictureValid = false;
+
+        UpdateIsRenderedObjects();
         if (IsRendered() && !IsObstructed() && IsInRange()) _pictureValid = true;
         else _pictureValid = false;
     }
@@ -94,7 +97,10 @@ public class OnPicture : MonoBehaviour {
     }
 
     protected void UpdateIsRenderedObjects() {
-        _IsRendered = ObjectToBeVisible.GetComponentsInChildren<IsRendered>();
+        if (ObjectToBeVisible != null)
+            _IsRendered = ObjectToBeVisible.GetComponentsInChildren<IsRendered>();
+        else
+            _IsRendered = new IsRendered[0];
     }
 
     protected void Unsubscribe() {

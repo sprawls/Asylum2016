@@ -10,14 +10,21 @@ public class OnPictureAppearDissapear : OnPicture {
     public bool DestroyObjectToAppearOnPhotoAfter = true;
 
     public override void OnBeforePictureTaken() {
-        if (ObjectToAppear!=null) ObjectToAppear.SetActive(true);
-        if (ObjectToDestroy != null) Destroy(ObjectToDestroy);
+        if (ObjectToAppear != null) {
+            ObjectToAppear.SetActive(true);
+        }
+        if (ObjectToDestroy != null) {
+            Destroy(ObjectToDestroy);
+            ObjectToDestroy = null;
+        }
     }
 
     public override void OnPictureTaken()  {
         if (ObjectToAppearOnPhoto != null) {
-            if (DestroyObjectToAppearOnPhotoAfter) Destroy(ObjectToAppearOnPhoto);
-            else ObjectToAppearOnPhoto.SetActive(false);
+            if (DestroyObjectToAppearOnPhotoAfter) {
+                Destroy(ObjectToAppearOnPhoto);
+                ObjectToAppearOnPhoto = null;
+            } else ObjectToAppearOnPhoto.SetActive(false);
         }
         Unsubscribe();
     }
