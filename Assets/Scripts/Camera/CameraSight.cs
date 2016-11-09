@@ -15,11 +15,11 @@ public class CameraSight : MonoBehaviour {
     [SerializeField]
     private float _maximumDistanceFromSightOnImportantPicture = 20.0f;
 
-    [Range(0.0f,90.0f)]
+    [Range(0.0f,360.0f)]
     [SerializeField]
     private float _maximumLookAtAngle = 45.0f;
 
-    [Range(0.0f, 90.0f)]
+    [Range(0.0f, 360.0f)]
     [SerializeField]
     private float _maximumAngleFacing = 45.0f;
 

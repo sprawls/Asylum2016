@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 71f63cf62771e14459fea0cc4d01b32f
-timeCreated: 1478384538
+timeCreated: 1478626171
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,19 @@ TextureImporter:
     21300006: Decals_BoxYou
     21300008: Decals_BoxDid
     21300010: Decals_BoxIt
+    21300012: Decals_Details_0
+    21300014: Decals_Details_1
+    21300016: Decals_Details_2
+    21300018: Decals_Details_3
+    21300020: Decals_Details_4
+    21300022: Decals_Details_5
+    21300024: Decals_Details_6
+    21300026: Decals_Details_7
+    21300028: Decals_Details_8
+    21300030: Decals_Details_9
+    21300032: Decals_Details_10
+    21300034: Decals_Details_11
+    21300036: Decals_Details_12
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -127,10 +140,179 @@ TextureImporter:
       name: Decals_BoxIt
       rect:
         serializedVersion: 2
-        x: 3753
-        y: 7425
+        x: 3745
+        y: 7421
         width: 705
         height: 531
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_0
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 7002
+        width: 727
+        height: 421
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_1
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 7006
+        width: 720
+        height: 428
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_2
+      rect:
+        serializedVersion: 2
+        x: 2254
+        y: 7002
+        width: 716
+        height: 425
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_3
+      rect:
+        serializedVersion: 2
+        x: 3020
+        y: 7006
+        width: 692
+        height: 432
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_4
+      rect:
+        serializedVersion: 2
+        x: 3823
+        y: 7002
+        width: 720
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_5
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 6543
+        width: 700
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_6
+      rect:
+        serializedVersion: 2
+        x: 1458
+        y: 6550
+        width: 704
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_7
+      rect:
+        serializedVersion: 2
+        x: 3827
+        y: 6539
+        width: 724
+        height: 425
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_8
+      rect:
+        serializedVersion: 2
+        x: 2262
+        y: 6539
+        width: 712
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_9
+      rect:
+        serializedVersion: 2
+        x: 3047
+        y: 6547
+        width: 711
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_10
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 6015
+        width: 712
+        height: 398
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_11
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 6003
+        width: 697
+        height: 417
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_12
+      rect:
+        serializedVersion: 2
+        x: 2258
+        y: 5992
+        width: 727
+        height: 428
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
