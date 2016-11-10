@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 71f63cf62771e14459fea0cc4d01b32f
-timeCreated: 1478626171
+timeCreated: 1478816526
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,6 +23,7 @@ TextureImporter:
     21300032: Decals_Details_10
     21300034: Decals_Details_11
     21300036: Decals_Details_12
+    21300038: Decals_Details_13
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -313,6 +314,19 @@ TextureImporter:
         y: 5992
         width: 727
         height: 428
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Decals_Details_13
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 4063
+        width: 1048
+        height: 1578
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
