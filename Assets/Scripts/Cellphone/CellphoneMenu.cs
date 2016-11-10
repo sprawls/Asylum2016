@@ -25,12 +25,15 @@ public class CellphoneMenu : MonoBehaviour {
 	public static event Action OnFlashlightOpen;
 	public static event Action OnFlashlightClose;
 	public static event Action OnQuit;
+    public static event Action OnOpenBlockedFlashlight;
 
 	private bool _focused = false;
 	private bool _listen = true;
 	private bool _galleryOpen = false;
 	private bool _flashlightOpened = true;
 	private bool _flashlightWasOpened = false;
+    private bool _flashlightBlocked = false;
+    private bool _cameraOn = false;
 
 	private GameObject _menu; 
 	private CanvasGroup _canvasGroup;
@@ -130,6 +133,14 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 	
 	public void OnFlashlightIconClicked() {
+        if (!_flashlightOpened && _cameraOn) {
+            if(OnOpenBlockedFlashlight != null)
+            {
+                OnOpenBlockedFlashlight();
+            }     
+            return;
+        }
+
 		_flashlightOpened = !_flashlightOpened;
 
 		Image flashlightIcon = flashlightButton.transform.FindChild("Icon").GetComponent<Image>();
@@ -168,6 +179,7 @@ public class CellphoneMenu : MonoBehaviour {
 
     private void OnCameraStart() {
         _canvasGroup.DOFade(0f, 0.25f);
+        _cameraOn = true;
 
 		// Close flashlight when opening camera
 		_flashlightWasOpened = _flashlightOpened;
@@ -178,6 +190,7 @@ public class CellphoneMenu : MonoBehaviour {
 
     private void OnCameraEnd() {
         _canvasGroup.DOFade(1f, 0.25f);
+        _cameraOn = false;
 
 		// Reopen flashlight if it was opened
 		if (_flashlightWasOpened) {

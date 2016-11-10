@@ -83,8 +83,7 @@ public class SoundManager : MonoBehaviour {
         if(source)
         {
             source.pitch = 1.0f;
-            source.clip = clip;
-            source.Play();
+            source.PlayOneShot(clip);
         }
         
     }

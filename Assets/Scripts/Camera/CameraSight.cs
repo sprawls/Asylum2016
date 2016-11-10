@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 
 [RequireComponent(typeof(Renderer))]
@@ -75,9 +74,8 @@ public class CameraSight : MonoBehaviour {
         {
             OnImportantPictureTaken(picture);
             OnImportantPictureTakenNonStatic();
+
+			TutorialMachine.Instance.HideMessage(TutorialMachine.EMessageType.TakeImportantPictures);
         }
     }
-
-    
-
 }

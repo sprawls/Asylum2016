@@ -47,6 +47,8 @@ public class CameraController : MonoBehaviour {
     private float _inCameraModeFocalSize = 0.00f;
     private float _outCameraModeFocalSize = 2.00f;
 
+	private bool _noPicturesTaken = true;
+
 	void Start () {
         _mainCamera = transform.Find("FirstPersonCharacter").GetComponent<Camera>();
         _cellphoneCamera = _mainCamera.transform.Find("CellphoneCamera").GetComponent<Camera>();
@@ -101,7 +103,7 @@ public class CameraController : MonoBehaviour {
 
     IEnumerator DeativateCameraMode() {
         if (OnCameraEnd != null) {
-            OnCameraEnd();
+            OnCameraEnd();        
         }
         _inEquipCameraAnimation = true;
         cameraModeActive = false;
@@ -167,6 +169,8 @@ public class CameraController : MonoBehaviour {
 
         _pictureFlash.gameObject.SetActive(true);
         SaveImage(_flashImage);
+		
+		TutorialMachine.Instance.HideMessage(TutorialMachine.EMessageType.OpenCamera);
 
         if (OnPictureTaken != null) {
             OnPictureTaken(_flashImage.sprite);
@@ -189,6 +193,13 @@ public class CameraController : MonoBehaviour {
         if (OnAfterPictureTaken != null) { 
             OnAfterPictureTaken();
         }
+
+		if (_noPicturesTaken) {
+			_noPicturesTaken = false;
+
+			yield return new WaitForSeconds(8f);
+			TutorialMachine.Instance.ShowMessage(TutorialMachine.EMessageType.TakeImportantPictures);
+		}
     }
 
     void SaveImage(Image imgToChange) {

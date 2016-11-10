@@ -9,6 +9,8 @@ public abstract class Interactable : MonoBehaviour
     private bool _highlightActive = false;
     private OutlineController[] _outlineControllers;
 
+	private static bool _NEVER_ILLUMINATED = true;
+
     public virtual bool IsInteractable { get { return true; } }
 
     protected abstract void OnTrigger();
@@ -24,12 +26,18 @@ public abstract class Interactable : MonoBehaviour
     public void Trigger()
     {
         OnTrigger();
+		TutorialMachine.Instance.HideMessage(TutorialMachine.EMessageType.ClickToInteract);
     }
 
     public void SetTargeted()
     {
         _highlightActive = true;
         SetOutline(true);
+
+		if (_NEVER_ILLUMINATED) {
+			TutorialMachine.Instance.ShowMessage(TutorialMachine.EMessageType.ClickToInteract);
+			_NEVER_ILLUMINATED = false;
+		}
     }
 
     public void ClearTargeted()
