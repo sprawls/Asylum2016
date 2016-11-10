@@ -35,6 +35,11 @@ public class CellphoneMenu : MonoBehaviour {
     private bool _flashlightBlocked = false;
     private bool _cameraOn = false;
 
+    [SerializeField]
+    private AudioClip _sndSelectApp;
+    [SerializeField]
+    private AudioClip _sndChangeApp;
+
 	private GameObject _menu; 
 	private CanvasGroup _canvasGroup;
 
@@ -42,6 +47,8 @@ public class CellphoneMenu : MonoBehaviour {
 		CameraController.OnCameraStart += this.OnCameraStart;
 		CameraController.OnCameraEnd += this.OnCameraEnd;
 		CameraController.OnPictureTaken += this.OnPictureTaken;
+        Selection.OnSelectButton += this.OnSelectButton;
+        Selection.OnButtonClicked += this.OnButtonClicked;
 
 		_menu = transform.FindChild("Canvas").FindChild("Menu").gameObject;
 		_canvasGroup = GetComponentInChildren<CanvasGroup>();
@@ -50,7 +57,8 @@ public class CellphoneMenu : MonoBehaviour {
 	private void OnDestroy() {
 		CameraController.OnCameraStart -= this.OnCameraStart;
 		CameraController.OnCameraEnd -= this.OnCameraEnd;
-	}
+        Selection.OnSelectButton -= this.OnSelectButton;
+    }
 
 	private void Update() {
 		// Debug key to stop keyboard events
@@ -100,10 +108,9 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 
 	public void OnPhoneIconClicked() {
-		if (OnPhoneOpen != null) {
+        if (OnPhoneOpen != null) {
 			OnPhoneOpen.Invoke();
-
-			Image phoneIcon = phoneButton.transform.FindChild("Icon").GetComponent<Image>();
+            Image phoneIcon = phoneButton.transform.FindChild("Icon").GetComponent<Image>();
 			if (phoneIcon != null) {
 				phoneIcon.sprite = this.phoneIcon;
 			}
@@ -115,7 +122,8 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 
 	public void OnGalleryIconClicked() {
-		if (OnGalleryOpen != null) {
+
+        if (OnGalleryOpen != null) {
 			_menu.SetActive(false);
 			_galleryOpen = true;
 			OnGalleryOpen.Invoke();
@@ -133,6 +141,7 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 	
 	public void OnFlashlightIconClicked() {
+
         if (!_flashlightOpened && _cameraOn) {
             if(OnOpenBlockedFlashlight != null)
             {
@@ -160,7 +169,8 @@ public class CellphoneMenu : MonoBehaviour {
 	}
 
 	public void OnQuitIconClicked() {
-		if (OnQuit != null) {
+
+        if (OnQuit != null) {
 			OnQuit.Invoke();
 		}
 
@@ -202,4 +212,14 @@ public class CellphoneMenu : MonoBehaviour {
 	private void OnPictureTaken(Sprite newPicture) {
 		// TODO: Increment gallery count
 	}
+
+    private void OnSelectButton()
+    {
+        SoundManager.Instance.PlaySingleSFX(_sndChangeApp, ESFXType.ESFXType_PLAYER);
+    }
+
+    private void OnButtonClicked()
+    {
+        SoundManager.Instance.PlaySingleSFX(_sndSelectApp, ESFXType.ESFXType_PLAYER);
+    }
 }
