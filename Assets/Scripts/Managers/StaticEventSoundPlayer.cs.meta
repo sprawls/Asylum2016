@@ -1,10 +1,17 @@
 fileFormatVersion: 2
 guid: eabd925cb3c3ccc4f8ceb83e48de4cc3
-timeCreated: 1478482921
+timeCreated: 1478744740
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _cameraStart: {instanceID: 0}
+  - _cameraStop: {instanceID: 0}
+  - _onPicture: {fileID: 8300000, guid: 06ee2c5e7ea492f4491a9a45cd1ab9d2, type: 3}
+  - _onImportantPicture: {instanceID: 0}
+  - _flashlightOpen: {instanceID: 0}
+  - _flashlightClose: {instanceID: 0}
+  - _flashLightBlocked: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

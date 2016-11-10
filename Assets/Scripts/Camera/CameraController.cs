@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour {
 
     IEnumerator DeativateCameraMode() {
         if (OnCameraEnd != null) {
-            OnCameraEnd();
+            OnCameraEnd();        
         }
         _inEquipCameraAnimation = true;
         cameraModeActive = false;
