@@ -4,6 +4,15 @@ using JetBrains.Annotations;
 
 public class Interactable_Door : Interactable, IEventBoundFunctions
 {
+    [SerializeField]
+    private AudioClip _sndDoorOpen;
+    [SerializeField]
+    private AudioClip _sndDoorClose;
+    [SerializeField]
+    private AudioClip _sndDoorLock;
+    [SerializeField]
+    private AudioClip _sndDoorUnlock;
+
     private enum DoorState
     {
         Closed,
@@ -79,8 +88,10 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
 
     protected override void OnTrigger()
     {
-        if (_locked)
-            return;
+        if(_locked)
+        {
+            SoundManager.Instance.PlaySingleSFX(_sndDoorLock, ESFXType.ESFXType_GAMEPLAY);
+        }
 
         switch (_state)
         {
@@ -99,10 +110,11 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     [EventBoundFunction]
     public void Open()
     {
-        if (_locked)
-            return;
+        if(_locked)
+            return; 
 
         _state = DoorState.Opening;
+        SoundManager.Instance.PlaySingleSFXWithRandomPitch(_sndDoorOpen, ESFXType.ESFXType_GAMEPLAY);
     }
 
     [EventBoundFunction]
@@ -112,6 +124,7 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
             return;
 
         _state = DoorState.Closing;
+        SoundManager.Instance.PlaySingleSFXWithRandomPitch(_sndDoorClose, ESFXType.ESFXType_GAMEPLAY);
     }
 
     [EventBoundFunction]
@@ -124,5 +137,6 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     public void Unlock()
     {
         _locked = false;
+        SoundManager.Instance.PlaySingleSFX(_sndDoorUnlock, ESFXType.ESFXType_GAMEPLAY);
     }
 }

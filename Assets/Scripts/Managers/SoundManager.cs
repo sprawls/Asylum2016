@@ -17,6 +17,10 @@ public class SoundManager : MonoBehaviour {
     [SerializeField]
     private AudioClip[] randomSounds;
 
+    const int RANDOM_PITCH_SOURCES_SIZE = 5;
+    private AudioSource[] _randomPitchSources = new AudioSource[RANDOM_PITCH_SOURCES_SIZE];
+    private int _currentRandomSourceIndex = 0;
+
     //Class members
     private static SoundManager _instance;
     public static SoundManager  Instance { get { return _instance; } }
@@ -53,6 +57,11 @@ public class SoundManager : MonoBehaviour {
             _instance = this;
         }
 
+        for(int i=0; i< RANDOM_PITCH_SOURCES_SIZE; ++i)
+        {
+            _randomPitchSources[i] = gameObject.AddComponent<AudioSource>();
+        }
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -80,14 +89,27 @@ public class SoundManager : MonoBehaviour {
         
     }
 
+    public void PlaySingleSFXWithRandomPitch(AudioClip clip, ESFXType type)
+    {
+        float randomPitch = Random.Range(minPitchSFXRange, maxPitchSFXRange);
+
+        _randomPitchSources[_currentRandomSourceIndex].pitch = randomPitch;
+        _randomPitchSources[_currentRandomSourceIndex].clip = clip;
+        _randomPitchSources[_currentRandomSourceIndex].Play();
+
+        _currentRandomSourceIndex = (_currentRandomSourceIndex + 1) % RANDOM_PITCH_SOURCES_SIZE;
+    }
+
     public void PlayRandomGameplaySFX (params AudioClip[] clips)
     {
         int randomIndex = Random.Range(0, clips.Length);
         float randomPitch = Random.Range(minPitchSFXRange, maxPitchSFXRange);
 
-        _gameplaySFXAudioSource.pitch = randomPitch;
-        _gameplaySFXAudioSource.clip = clips[randomIndex];
-        _gameplaySFXAudioSource.Play();
+        _randomPitchSources[_currentRandomSourceIndex].pitch = randomPitch;
+        _randomPitchSources[_currentRandomSourceIndex].clip = clips[randomIndex];
+        _randomPitchSources[_currentRandomSourceIndex].Play();
+
+        _currentRandomSourceIndex = (_currentRandomSourceIndex + 1) % RANDOM_PITCH_SOURCES_SIZE;
     }
 
     public void ChangeMusic(AudioClip musicClip)

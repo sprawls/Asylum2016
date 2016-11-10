@@ -72,9 +72,9 @@ public class GazeController : MonoBehaviour
         if (i == null)
             return null;
 
-        if (i.IsInteractable)
-            return i;
+        //if (i.IsInteractable)
+        return i;
 
-        return null;
+        //return null;
     }
 }
