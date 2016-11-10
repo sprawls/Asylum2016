@@ -19,6 +19,7 @@ public class StaticEventSoundPlayer : MonoBehaviour {
         CameraController.OnPictureTaken += PlayOnPictureTakenEventSound;
         CameraController.OnCameraStart += PlayOnCameraStartSound;
         CameraController.OnCameraEnd += PlayOnCameraStopSound;
+        CameraSight.OnImportantPictureTaken += PlayOnImportantPictureSound;
 
         CellphoneMenu.OnFlashlightOpen += PlayOnFlashlightOpenSound;
         CellphoneMenu.OnFlashlightClose += PlayOnFlashlightClosedSound;
@@ -28,34 +29,34 @@ public class StaticEventSoundPlayer : MonoBehaviour {
     ///////////////////////////////// CAMERA /////////////////////////////////////
     void PlayOnPictureTakenEventSound(Sprite sp) {
         SoundManager.Instance.PlaySingleSFX(_onPicture, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnPictureTakenEventSound");
+        //Debug.Log("PlayOnPictureTakenEventSound");
     }
     void PlayOnCameraStartSound() {
         SoundManager.Instance.PlaySingleSFX(_cameraStart, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnCameraStartSound");
+        //Debug.Log("PlayOnCameraStartSound");
     }
     void PlayOnCameraStopSound() {
         SoundManager.Instance.PlaySingleSFX(_cameraStop, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnCameraStopSound");
+        //Debug.Log("PlayOnCameraStopSound");
     }
-    void PlayOnImportantPictureSound() {
+    void PlayOnImportantPictureSound(Sprite sp) {
         SoundManager.Instance.PlaySingleSFX(_onImportantPicture, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnImportantPictureSound");
+        //Debug.Log("PlayOnImportantPictureSound");
     }
 
 
     ///////////////////////////////// CAMERA /////////////////////////////////////
     void PlayOnFlashlightOpenSound() {
         SoundManager.Instance.PlaySingleSFX(_flashlightOpen, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnFlashlightOpenSound");
+        //Debug.Log("PlayOnFlashlightOpenSound");
     }
     void PlayOnFlashlightClosedSound() {
         SoundManager.Instance.PlaySingleSFX(_flashlightClose, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnFlashlightClosedSound");
+        //Debug.Log("PlayOnFlashlightClosedSound");
     }
     void PlayOnFlashlightBlockedSound() {
         SoundManager.Instance.PlaySingleSFX(_flashLightBlocked, ESFXType.ESFXType_PLAYER);
-        Debug.Log("PlayOnFlashlightBlockedSound");
+        //Debug.Log("PlayOnFlashlightBlockedSound");
     }
 
 
