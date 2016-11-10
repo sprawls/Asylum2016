@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using System.Collections;
 using JetBrains.Annotations;
 
 public class Interactable_Door : Interactable, IEventBoundFunctions
@@ -9,9 +9,14 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     [SerializeField]
     private AudioClip _sndDoorClose;
     [SerializeField]
-    private AudioClip _sndDoorLock;
-    [SerializeField]
     private AudioClip _sndDoorUnlock;
+    [SerializeField]
+    private AudioClip _sndDoorLock;
+
+    [SerializeField]
+    private float     _delayBeforeUnlock;
+
+    //private float 
 
     private enum DoorState
     {
@@ -136,6 +141,12 @@ public class Interactable_Door : Interactable, IEventBoundFunctions
     [EventBoundFunction]
     public void Unlock()
     {
+        StartCoroutine(WaitTimeUntilUnlock(_delayBeforeUnlock));
+    }
+
+    IEnumerator WaitTimeUntilUnlock(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         _locked = false;
         SoundManager.Instance.PlaySingleSFX(_sndDoorUnlock, ESFXType.ESFXType_GAMEPLAY);
     }
