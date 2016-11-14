@@ -17,10 +17,10 @@ public class CameraDistortionVision : MonoBehaviour {
     private Shader _defaultShader;
 
     void Start() {
-        _defaultShader = Shader.Find("Image Effects/Camera");
+        _defaultShader = Resources.Load<Shader>("Image Effects/Camera");
         _defaultMat = new Material(_defaultShader);
 
-        _distortionShader = Shader.Find("Image Effects/CameraDistortion");
+        _distortionShader = Resources.Load<Shader>("Image Effects/CameraDistortion");
         _distortionMat = new Material(_distortionShader);
         _distortionMat.SetVector("lum", new Vector4(luminence.g, luminence.g, luminence.g, luminence.g));
         _distortionMat.SetFloat("noiseFactor", noiseFactor);

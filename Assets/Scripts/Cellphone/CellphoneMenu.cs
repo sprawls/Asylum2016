@@ -174,9 +174,9 @@ public class CellphoneMenu : MonoBehaviour {
 			OnQuit.Invoke();
 		}
 
-		// TODO: Quit gaem
-
 		OnUnfocus();
+
+        Application.Quit();
 	}
 
 	// TODO: Plug this to the receive call event
