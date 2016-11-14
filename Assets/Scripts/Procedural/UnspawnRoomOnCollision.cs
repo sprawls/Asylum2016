@@ -14,6 +14,6 @@ public class UnspawnRoomOnCollision : MonoBehaviour {
 
     void SpawnRoom() {
         _activated = true;
-        currentRoom.Remove();
+        currentRoom.Replace();
     }
 }

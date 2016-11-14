@@ -7,6 +7,7 @@ public class ProceduralRoom : MonoBehaviour {
     [SerializeField] private RoomAnchor startAnchor;
     [SerializeField] private RoomAnchor endAnchor;
     [SerializeField] private GameObject RoomToSpawn;
+    [SerializeField] private GameObject RoomToReplaceWith;
 
     [SerializeField] private float UnspawnDistance = 100f;
     private static GameObject player;
@@ -38,14 +39,21 @@ public class ProceduralRoom : MonoBehaviour {
         go.GetComponent<ProceduralRoom>().PositionRoomToOtherAnchor(endAnchor);
     }
 
-    public void Remove() {
+    public void Destroy()
+    {
         Destroy(gameObject);
+    }
+
+    public void Replace()
+    {
+        RoomToReplaceWith.transform.position = gameObject.transform.position;
+        Destroy();
     }
 
     IEnumerator HandleUnspawnDistance() {
         while (true) {
             if (player != null) {
-                if ((transform.position - player.transform.position).magnitude > UnspawnDistance) Remove();
+                if ((transform.position - player.transform.position).magnitude > UnspawnDistance) Destroy();
                 yield return new WaitForSeconds(1f);
             }
         }
